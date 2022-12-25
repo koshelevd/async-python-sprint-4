@@ -1,8 +1,8 @@
-"""empty message
+"""Initial migration
 
-Revision ID: 553460c5c09c
+Revision ID: 7d30a91d70c1
 Revises: 
-Create Date: 2022-12-23 07:14:25.638365+00:00
+Create Date: 2022-12-25 11:11:56.969667+00:00
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '553460c5c09c'
+revision = '7d30a91d70c1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -36,7 +36,7 @@ def upgrade():
     sa.Column('deleted_at', sa.DateTime(), nullable=True, comment='Date and time of logic deletion'),
     sa.Column('is_deleted', sa.Boolean(), nullable=False, comment='Is object marked as deleted'),
     sa.Column('original_url', sa.String(length=255), nullable=False, comment='Original URL'),
-    sa.Column('link_type', sa.String(length=32), nullable=False, comment='Link type'),
+    sa.Column('link_type', sa.Enum('public', 'private', name='link_type'), nullable=False, comment='Link type'),
     sa.Column('user_id', sa.Integer(), nullable=True, comment='User'),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -49,7 +49,7 @@ def upgrade():
     sa.Column('is_deleted', sa.Boolean(), nullable=False, comment='Is object marked as deleted'),
     sa.Column('link_id', sa.Integer(), nullable=False, comment='Link ID'),
     sa.Column('user_id', sa.Integer(), nullable=True, comment='User ID'),
-    sa.ForeignKeyConstraint(['link_id'], ['links.id'], ),
+    sa.ForeignKeyConstraint(['link_id'], ['links.id'], ondelete='CASCADE'),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

@@ -1,7 +1,10 @@
+from fastapi import status
+
+
 class BaseCustomException(Exception):
     """Base class for custom errors"""
 
-    status = 400
+    status = status.HTTP_400_BAD_REQUEST
     message = "Not set"
     description = "Bad Request"
     context = None
@@ -62,14 +65,14 @@ class NotFoundValueException(BaseFieldException):
 
     message = "Object not found"
     context_message = "Object not found with {field}"
-    status = 404
+    status = status.HTTP_404_NOT_FOUND
     description = "Not Found"
 
 
 class InvalidValueException(BaseFieldException):
     """Error caused by the inability to find an object with field value."""
 
-    status = 422
+    status = status.HTTP_422_UNPROCESSABLE_ENTITY
     message = "Invalid value"
     context_message = "Invalid value: {field}"
 
@@ -77,19 +80,18 @@ class InvalidValueException(BaseFieldException):
 class BadRequestException(BaseSimpleException):
     """Bad request error."""
 
-    status = 400
     message = "Bad Request"
 
 
 class ObjectIsGoneException(BaseSimpleException):
     """Error caused by the deleted status of object."""
 
-    status = 410
+    status = status.HTTP_410_GONE
     message = "Object is gone"
 
 
 class NotAuthorizedException(BaseSimpleException):
     """Not authorized error."""
 
-    status = 401
+    status = status.HTTP_401_UNAUTHORIZED
     message = "Not authorized"

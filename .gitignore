@@ -7,3 +7,5 @@
 .env
 
 pyrightconfig.json
+
+.pytest_cache

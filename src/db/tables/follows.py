@@ -10,7 +10,8 @@ class Follow(BaseModel):
     __tablename__ = "follows"
 
     link_id = Column(
-        Integer, ForeignKey("links.id"), nullable=False, comment="Link ID"
+        Integer, ForeignKey("links.id", ondelete="CASCADE"), nullable=False,
+        comment="Link ID"
     )
     link = relationship(
         "Link", back_populates="follows", remote_side="Link.id", lazy="noload"

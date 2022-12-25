@@ -2,7 +2,9 @@ from alembic import context
 from sqlalchemy import create_engine, pool
 
 # noqa
+import db.tables
 from db.utils.db_session import Base
+
 
 config = context.config
 
